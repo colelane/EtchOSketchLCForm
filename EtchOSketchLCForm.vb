@@ -4,6 +4,7 @@ Option Explicit On
 'RCET 0265
 'Fall 2020
 'Etch-O-Sketch Form
+'https://github.com/colelane/EtchOSketchLCForm.git
 Public Class EtchOSketchLCForm
     Dim drawPen As New System.Drawing.Pen(Color.Black, 1)
     Dim erasePen As New System.Drawing.Pen(Color.FromName("Control"), 10)
@@ -45,7 +46,7 @@ Public Class EtchOSketchLCForm
         End If
     End Sub
     Private Sub DrawBox_Mouseup(sender As Object, e As MouseEventArgs) Handles DrawBox.MouseUp
-        'Removes Refernce point to draw if mouse is unclicked
+        'Removes Reference point to draw if mouse is unclicked
         lastX = 0
         lasty = 0
     End Sub
@@ -57,7 +58,7 @@ Public Class EtchOSketchLCForm
         ColorChooser()
     End Sub
 
-    Private Sub ColorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ColorToolStripMenuItem.Click
+    Private Sub ColorToolStripMenuItem_Click(sender As Object, e As EventArgs)
         ColorChooser()
     End Sub
 
@@ -67,45 +68,59 @@ Public Class EtchOSketchLCForm
     End Sub
 
     Private Sub ClearButton_Click(sender As Object, e As EventArgs) Handles ClearButton.Click
-        DrawBox.Image = Nothing
+        'This For loop 'shakes' the drawing picturebox.
+        For i = 1 To 100
+            DrawBox.Left = DrawBox.Left + 5
+            DrawBox.Top = DrawBox.Top + 5
+            DrawBox.Left = DrawBox.Left - 10
+            DrawBox.Top = DrawBox.Top - 10
+            DrawBox.Left = DrawBox.Left + 10
+            DrawBox.Top = DrawBox.Top + 10
+            DrawBox.Left = DrawBox.Left - 5
+            DrawBox.Top = DrawBox.Top - 5
+        Next
+        'Clears the graphics.
+        If g IsNot Nothing Then
+            g.Clear(Color.FromName("Control"))
+        End If
     End Sub
 
-    Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
+    Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs)
         drawPen.Width = 1
     End Sub
-    Private Sub ToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem3.Click
+    Private Sub ToolStripMenuItem3_Click(sender As Object, e As EventArgs)
         drawPen.Width = 2
     End Sub
-    Private Sub ToolStripMenuItem4_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem4.Click
+    Private Sub ToolStripMenuItem4_Click(sender As Object, e As EventArgs)
         drawPen.Width = 3
     End Sub
-    Private Sub ToolStripMenuItem5_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem5.Click
+    Private Sub ToolStripMenuItem5_Click(sender As Object, e As EventArgs)
         drawPen.Width = 4
     End Sub
-    Private Sub ToolStripMenuItem6_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem6.Click
+    Private Sub ToolStripMenuItem6_Click(sender As Object, e As EventArgs)
         drawPen.Width = 5
     End Sub
-    Private Sub ToolStripMenuItem7_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem7.Click
+    Private Sub ToolStripMenuItem7_Click(sender As Object, e As EventArgs)
         erasePen.Width = 5
     End Sub
 
-    Private Sub ToolStripMenuItem8_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem8.Click
+    Private Sub ToolStripMenuItem8_Click(sender As Object, e As EventArgs)
         erasePen.Width = 10
     End Sub
 
-    Private Sub ToolStripMenuItem9_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem9.Click
+    Private Sub ToolStripMenuItem9_Click(sender As Object, e As EventArgs)
         erasePen.Width = 20
     End Sub
 
-    Private Sub ToolStripMenuItem10_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem10.Click
+    Private Sub ToolStripMenuItem10_Click(sender As Object, e As EventArgs)
         erasePen.Width = 30
     End Sub
 
-    Private Sub ToolStripMenuItem11_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem11.Click
+    Private Sub ToolStripMenuItem11_Click(sender As Object, e As EventArgs)
         erasePen.Width = 40
     End Sub
 
-    Private Sub ToolStripMenuItem12_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem12.Click
+    Private Sub ToolStripMenuItem12_Click(sender As Object, e As EventArgs)
         erasePen.Width = 50
     End Sub
 
@@ -115,17 +130,37 @@ Public Class EtchOSketchLCForm
         End If
         DrawWaveforms()
     End Sub
+
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+        Me.Close()
+    End Sub
+
+    Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
+        Dim result As MsgBoxResult
+        result = MsgBox("Push the buttons to do the things. Got it?", MsgBoxStyle.YesNo)
+        If result = vbNo Then
+            Dim bruhForm As New Form
+            bruhForm.BackgroundImage = My.Resources.facepalm
+            bruhForm.Show()
+        End If
+    End Sub
+
     Sub DrawWaveforms()
         Dim SinPen As New System.Drawing.Pen(Color.Black, 3)
         Dim CoSinPen As New System.Drawing.Pen(Color.Red, 3)
         Dim TangentPen As New System.Drawing.Pen(Color.Blue, 3)
+        Dim LinePen As New System.Drawing.Pen(Color.Black, 1)
         Dim x As Double
         Dim y As Double
         Dim LastX As Integer
         Dim LastY As Integer
         g = DrawBox.CreateGraphics
 
+        For i = 1 To 10
+            g.DrawLine(LinePen, 62 * i, 500, 62 * i, -500)
+            g.DrawLine(LinePen, 1000, 34 * i, -1000, 34 * i)
 
+        Next
 
         'Draw SinWave
         For Cycles As Double = 0 To 1000
