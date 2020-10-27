@@ -1,14 +1,39 @@
-﻿Public Class EtchOSketchLCForm
+﻿Option Strict On
+Option Explicit On
+'Lane Coleman
+'RCET 0265
+'Fall 2020
+'Etch-O-Sketch Form
+Public Class EtchOSketchLCForm
     Dim drawPen As New System.Drawing.Pen(Color.Black, 1)
     Dim erasePen As New System.Drawing.Pen(Color.FromName("Control"), 10)
     Dim g As System.Drawing.Graphics
+    Dim lastX, lasty As Integer
     Sub Draw(x As Integer, y As Integer)
-        g = DrawBox.CreateGraphics()
-        g.DrawLine(drawPen, x, y, x - 1, y - 1)
+        g = DrawBox.CreateGraphics
+        If lastX = Nothing Then
+            g.DrawLine(drawPen, x, y, x, y)
+
+        Else
+            g.DrawLine(drawPen, x, y, lastX, lasty)
+
+
+        End If
+        lastX = x
+        lasty = y
     End Sub
     Sub Eraser(x As Integer, y As Integer)
-        g = DrawBox.CreateGraphics()
-        g.DrawLine(erasePen, x, y, x - 1, y - 1)
+        g = DrawBox.CreateGraphics
+        If lastX = Nothing Then
+            g.DrawLine(erasePen, x, y, x, y)
+
+        Else
+            g.DrawLine(erasePen, x, y, lastX, lasty)
+
+
+        End If
+        lastX = x
+        lasty = y
     End Sub
     Sub PictureBox1_MouseHoldMove(sender As Object, e As MouseEventArgs) Handles DrawBox.MouseDown, DrawBox.MouseMove
         If e.Button.ToString = "Left" Then
@@ -18,6 +43,11 @@
         ElseIf e.Button.ToString = "Middle" Then
             ColorChooser()
         End If
+    End Sub
+    Private Sub DrawBox_Mouseup(sender As Object, e As MouseEventArgs) Handles DrawBox.MouseUp
+        'Removes Refernce point to draw if mouse is unclicked
+        lastX = 0
+        lasty = 0
     End Sub
     Sub ColorChooser()
         ColorChoose.ShowDialog()
@@ -80,38 +110,63 @@
     End Sub
 
     Private Sub DrawWaveformsButton_Click(sender As Object, e As EventArgs) Handles DrawWaveformsButton.Click
+        If g IsNot Nothing Then
+            g.Clear(Color.FromName("Control"))
+        End If
+        DrawWaveforms()
+    End Sub
+    Sub DrawWaveforms()
+        Dim SinPen As New System.Drawing.Pen(Color.Black, 3)
+        Dim CoSinPen As New System.Drawing.Pen(Color.Red, 3)
+        Dim TangentPen As New System.Drawing.Pen(Color.Blue, 3)
         Dim x As Double
         Dim y As Double
-        Dim graphPen As New Pen(Color.Black, 3)
-        Dim g As Graphics
-
+        Dim LastX As Integer
+        Dim LastY As Integer
         g = DrawBox.CreateGraphics
-        'Sine
-        For r As Double = 0 To 450
-            y = Math.Sin(r / 280 * 2 * Math.PI) * 100 + 100
-            x = r
 
-            g.DrawLine(graphPen, CType(x, Single), CType(y, Single), CType(x, Single) + 1, CType(y, Single))
+
+
+        'Draw SinWave
+        For Cycles As Double = 0 To 1000
+
+
+            y = Math.Sin(Cycles / 400 * 2 * Math.PI) * 100 + 150
+            x = Cycles
+            g.DrawLine(SinPen, CType(x, Single), CType(y, Single), CType(x, Single) + 1, CType(y, Single))
+        Next
+
+        'Draw CoSinWave
+        For Cycles As Double = 0 To 1000
+
+
+            y = Math.Cos(Cycles / 400 * 2 * Math.PI) * 100 + 150
+            x = Cycles
+            g.DrawLine(CoSinPen, CType(x, Single), CType(y, Single), CType(x, Single) + 1, CType(y, Single))
+        Next
+
+        'Draw Tangent Wave
+        For Cycles As Double = 0 To 1000
+
+
+            y = Math.Tan(Cycles / 550 * 2 * Math.PI) * 20 + 150
+            x = Cycles
+
+            If LastX = Nothing Then
+                LastX = CInt(x)
+                LastY = CInt(y)
+            ElseIf y - LastY < -50 Then
+                LastX = CInt(x)
+                LastY = CInt(y)
+            End If
+            g.DrawLine(TangentPen, CType(x, Single), CType(y, Single), LastX, LastY)
+
+            LastY = CInt(y)
+            LastX = CInt(x)
 
         Next
 
-        'Cosine
-        For r As Double = 0 To 450
-            y = Math.Cos(r / 280 * 2 * Math.PI) * 100 + 100
-            x = r
 
-            g.DrawLine(graphPen, CType(x, Single), CType(y, Single), CType(x, Single) + 1, CType(y, Single))
-
-        Next
-
-        'Tangent
-        For r As Double = 0 To 450
-            y = Math.Tan(r / 99 * 2 * Math.PI) * 20 + 20
-            x = r
-
-            g.DrawLine(graphPen, CType(x, Single), CType(y, Single), CType(x, Single) + 1, CType(y, Single))
-
-        Next
 
     End Sub
 End Class
