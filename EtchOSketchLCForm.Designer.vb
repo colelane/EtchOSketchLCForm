@@ -29,7 +29,6 @@ Partial Class EtchOSketchLCForm
         Me.ClearButton = New System.Windows.Forms.Button()
         Me.ExitButton = New System.Windows.Forms.Button()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
-        Me.ColorChoose = New System.Windows.Forms.ColorDialog()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -51,6 +50,7 @@ Partial Class EtchOSketchLCForm
         Me.ToolStripMenuItem12 = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ColorChoose = New System.Windows.Forms.ColorDialog()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.DrawBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
@@ -64,7 +64,7 @@ Partial Class EtchOSketchLCForm
         Me.DrawBox.Size = New System.Drawing.Size(849, 648)
         Me.DrawBox.TabIndex = 0
         Me.DrawBox.TabStop = False
-        Me.ToolTip1.SetToolTip(Me.DrawBox, "Draw in this box!")
+        Me.ToolTip1.SetToolTip(Me.DrawBox, "Hold Left Click to Draw.  Hold Right Click to Erase.")
         '
         'SelectColorButton
         '
@@ -83,7 +83,7 @@ Partial Class EtchOSketchLCForm
         Me.DrawWaveformsButton.Size = New System.Drawing.Size(163, 92)
         Me.DrawWaveformsButton.TabIndex = 2
         Me.DrawWaveformsButton.Text = "Draw Waveforms"
-        Me.ToolTip1.SetToolTip(Me.DrawWaveformsButton, "Sin, Cos, and Tan")
+        Me.ToolTip1.SetToolTip(Me.DrawWaveformsButton, "Sin, Cos, and Tan. Press Enter.")
         Me.DrawWaveformsButton.UseVisualStyleBackColor = True
         '
         'ClearButton
@@ -92,8 +92,8 @@ Partial Class EtchOSketchLCForm
         Me.ClearButton.Name = "ClearButton"
         Me.ClearButton.Size = New System.Drawing.Size(163, 92)
         Me.ClearButton.TabIndex = 3
-        Me.ClearButton.Text = "&Clear"
-        Me.ToolTip1.SetToolTip(Me.ClearButton, "Clear the board")
+        Me.ClearButton.Text = "Erase"
+        Me.ToolTip1.SetToolTip(Me.ClearButton, "Clear the board. Press Escape.")
         Me.ClearButton.UseVisualStyleBackColor = True
         '
         'ExitButton
@@ -113,46 +113,42 @@ Partial Class EtchOSketchLCForm
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditToolStripMenuItem, Me.HelpToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(1149, 48)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1149, 42)
         Me.MenuStrip1.TabIndex = 5
         Me.MenuStrip1.Text = "MenuStrip1"
-        '
-        'ColorChoose
-        '
-        Me.ColorChoose.FullOpen = True
         '
         'FileToolStripMenuItem
         '
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(72, 38)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(72, 36)
         Me.FileToolStripMenuItem.Text = "File"
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(359, 44)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(186, 44)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'EditToolStripMenuItem
         '
         Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PenToolStripMenuItem, Me.EraserToolStripMenuItem})
         Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
-        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(75, 38)
+        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(75, 36)
         Me.EditToolStripMenuItem.Text = "Edit"
         '
         'PenToolStripMenuItem
         '
         Me.PenToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SizeToolStripMenuItem, Me.ColorToolStripMenuItem})
         Me.PenToolStripMenuItem.Name = "PenToolStripMenuItem"
-        Me.PenToolStripMenuItem.Size = New System.Drawing.Size(359, 44)
+        Me.PenToolStripMenuItem.Size = New System.Drawing.Size(212, 44)
         Me.PenToolStripMenuItem.Text = "Pen"
         '
         'SizeToolStripMenuItem
         '
         Me.SizeToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2, Me.ToolStripMenuItem3, Me.ToolStripMenuItem4, Me.ToolStripMenuItem5, Me.ToolStripMenuItem6})
         Me.SizeToolStripMenuItem.Name = "SizeToolStripMenuItem"
-        Me.SizeToolStripMenuItem.Size = New System.Drawing.Size(359, 44)
+        Me.SizeToolStripMenuItem.Size = New System.Drawing.Size(206, 44)
         Me.SizeToolStripMenuItem.Text = "Size"
         '
         'ToolStripMenuItem2
@@ -188,21 +184,21 @@ Partial Class EtchOSketchLCForm
         'ColorToolStripMenuItem
         '
         Me.ColorToolStripMenuItem.Name = "ColorToolStripMenuItem"
-        Me.ColorToolStripMenuItem.Size = New System.Drawing.Size(359, 44)
+        Me.ColorToolStripMenuItem.Size = New System.Drawing.Size(206, 44)
         Me.ColorToolStripMenuItem.Text = "Color"
         '
         'EraserToolStripMenuItem
         '
         Me.EraserToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SizeToolStripMenuItem1})
         Me.EraserToolStripMenuItem.Name = "EraserToolStripMenuItem"
-        Me.EraserToolStripMenuItem.Size = New System.Drawing.Size(359, 44)
+        Me.EraserToolStripMenuItem.Size = New System.Drawing.Size(212, 44)
         Me.EraserToolStripMenuItem.Text = "Eraser"
         '
         'SizeToolStripMenuItem1
         '
         Me.SizeToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem7, Me.ToolStripMenuItem8, Me.ToolStripMenuItem9, Me.ToolStripMenuItem10, Me.ToolStripMenuItem11, Me.ToolStripMenuItem12})
         Me.SizeToolStripMenuItem1.Name = "SizeToolStripMenuItem1"
-        Me.SizeToolStripMenuItem1.Size = New System.Drawing.Size(359, 44)
+        Me.SizeToolStripMenuItem1.Size = New System.Drawing.Size(192, 44)
         Me.SizeToolStripMenuItem1.Text = "Size"
         '
         'ToolStripMenuItem7
@@ -245,14 +241,18 @@ Partial Class EtchOSketchLCForm
         '
         Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem})
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(85, 38)
+        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(85, 36)
         Me.HelpToolStripMenuItem.Text = "Help"
         '
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(359, 44)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(214, 44)
         Me.AboutToolStripMenuItem.Text = "About"
+        '
+        'ColorChoose
+        '
+        Me.ColorChoose.FullOpen = True
         '
         'EtchOSketchLCForm
         '

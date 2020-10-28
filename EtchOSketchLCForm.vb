@@ -37,6 +37,7 @@ Public Class EtchOSketchLCForm
         lasty = y
     End Sub
     Sub PictureBox1_MouseHoldMove(sender As Object, e As MouseEventArgs) Handles DrawBox.MouseDown, DrawBox.MouseMove
+        ActiveControl = DrawBox
         If e.Button.ToString = "Left" Then
             Draw(e.X, e.Y)
         ElseIf e.Button.ToString = "Right" Then
@@ -67,64 +68,54 @@ Public Class EtchOSketchLCForm
 
     End Sub
 
-    Private Sub ClearButton_Click(sender As Object, e As EventArgs) Handles ClearButton.Click
-        'This For loop 'shakes' the drawing picturebox.
-        For i = 1 To 100
-            DrawBox.Left = DrawBox.Left + 5
-            DrawBox.Top = DrawBox.Top + 5
-            DrawBox.Left = DrawBox.Left - 10
-            DrawBox.Top = DrawBox.Top - 10
-            DrawBox.Left = DrawBox.Left + 10
-            DrawBox.Top = DrawBox.Top + 10
-            DrawBox.Left = DrawBox.Left - 5
-            DrawBox.Top = DrawBox.Top - 5
-        Next
-        'Clears the graphics.
-        If g IsNot Nothing Then
-            g.Clear(Color.FromName("Control"))
-        End If
+    Public Sub ClearButton_Click(sender As Object, e As EventArgs) Handles ClearButton.Click
+        Clear()
     End Sub
 
     Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs)
         drawPen.Width = 1
     End Sub
-    Private Sub ToolStripMenuItem3_Click(sender As Object, e As EventArgs)
+
+    Private Sub ToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem3.Click
         drawPen.Width = 2
     End Sub
-    Private Sub ToolStripMenuItem4_Click(sender As Object, e As EventArgs)
+
+    Private Sub ToolStripMenuItem4_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem4.Click
         drawPen.Width = 3
     End Sub
-    Private Sub ToolStripMenuItem5_Click(sender As Object, e As EventArgs)
+
+    Private Sub ToolStripMenuItem5_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem5.Click
         drawPen.Width = 4
     End Sub
-    Private Sub ToolStripMenuItem6_Click(sender As Object, e As EventArgs)
+
+    Private Sub ToolStripMenuItem6_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem6.Click
         drawPen.Width = 5
     End Sub
-    Private Sub ToolStripMenuItem7_Click(sender As Object, e As EventArgs)
+    Private Sub ToolStripMenuItem7_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem7.Click
         erasePen.Width = 5
     End Sub
 
-    Private Sub ToolStripMenuItem8_Click(sender As Object, e As EventArgs)
-        erasePen.Width = 10
-    End Sub
-
-    Private Sub ToolStripMenuItem9_Click(sender As Object, e As EventArgs)
+    Private Sub ToolStripMenuItem8_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem8.Click
         erasePen.Width = 20
     End Sub
 
-    Private Sub ToolStripMenuItem10_Click(sender As Object, e As EventArgs)
+    Private Sub ToolStripMenuItem9_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem9.Click
+        erasePen.Width = 20
+    End Sub
+
+    Private Sub ToolStripMenuItem10_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem10.Click
         erasePen.Width = 30
     End Sub
 
-    Private Sub ToolStripMenuItem11_Click(sender As Object, e As EventArgs)
+    Private Sub ToolStripMenuItem11_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem11.Click
         erasePen.Width = 40
     End Sub
 
-    Private Sub ToolStripMenuItem12_Click(sender As Object, e As EventArgs)
+    Private Sub ToolStripMenuItem12_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem12.Click
         erasePen.Width = 50
     End Sub
-
     Private Sub DrawWaveformsButton_Click(sender As Object, e As EventArgs) Handles DrawWaveformsButton.Click
+        'Clears Graphics.
         If g IsNot Nothing Then
             g.Clear(Color.FromName("Control"))
         End If
@@ -137,12 +128,26 @@ Public Class EtchOSketchLCForm
 
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         Dim result As MsgBoxResult
-        result = MsgBox("Push the buttons to do the things. Got it?", MsgBoxStyle.YesNo)
+        result = MsgBox("Esc for Clear" & vbNewLine & "Enter for Draw Waveforms" & vbNewLine &
+                        "If hotkeys are broken, click in the drawbox" & vbNewLine &
+                        "Push the buttons to do the things. Got it?", MsgBoxStyle.YesNo)
         If result = vbNo Then
             Dim bruhForm As New Form
             bruhForm.BackgroundImage = My.Resources.facepalm
             bruhForm.Show()
         End If
+    End Sub
+
+    Public Sub EtchOSketchLCForm_keypress(sender As Object, e As KeyEventArgs) Handles DrawBox.KeyUp
+        If e.KeyCode = Keys.Enter Then
+            DrawWaveforms()
+        ElseIf e.KeyCode = Keys.Escape Then
+            Clear()
+        End If
+    End Sub
+
+    Private Sub EtchOSketchLCForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ActiveControl = DrawBox
     End Sub
 
     Sub DrawWaveforms()
@@ -156,6 +161,7 @@ Public Class EtchOSketchLCForm
         Dim LastY As Integer
         g = DrawBox.CreateGraphics
 
+        'Draws Graph Lines
         For i = 1 To 10
             g.DrawLine(LinePen, 62 * i, 500, 62 * i, -500)
             g.DrawLine(LinePen, 1000, 34 * i, -1000, 34 * i)
@@ -203,5 +209,23 @@ Public Class EtchOSketchLCForm
 
 
 
+    End Sub
+    Sub Clear()
+        'This For loop 'shakes' the drawing picturebox.
+
+        For i = 1 To 100
+            DrawBox.Left = DrawBox.Left + 5
+            DrawBox.Top = DrawBox.Top + 5
+            DrawBox.Left = DrawBox.Left - 10
+            DrawBox.Top = DrawBox.Top - 10
+            DrawBox.Left = DrawBox.Left + 10
+            DrawBox.Top = DrawBox.Top + 10
+            DrawBox.Left = DrawBox.Left - 5
+            DrawBox.Top = DrawBox.Top - 5
+        Next
+        'Clears the graphics.
+        If g IsNot Nothing Then
+            g.Clear(Color.FromName("Control"))
+        End If
     End Sub
 End Class
