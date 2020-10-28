@@ -138,13 +138,13 @@ Public Class EtchOSketchLCForm
         End If
     End Sub
 
-    Public Sub EtchOSketchLCForm_keypress(sender As Object, e As KeyEventArgs) Handles DrawBox.KeyUp
-        If e.KeyCode = Keys.Enter Then
-            DrawWaveforms()
-        ElseIf e.KeyCode = Keys.Escape Then
-            Clear()
-        End If
-    End Sub
+    'Public Sub EtchOSketchLCForm_keypress(sender As Object, e As KeyEventArgs) Handles DrawBox.KeyUp
+    '    If e.KeyCode = Keys.Enter Then
+    '        DrawWaveforms()
+    '    ElseIf e.KeyCode = Keys.Escape Then
+    '        Clear()
+    '    End If
+    'End Sub
 
     Private Sub EtchOSketchLCForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ActiveControl = DrawBox
