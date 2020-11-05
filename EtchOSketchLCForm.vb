@@ -11,13 +11,12 @@ Public Class EtchOSketchLCForm
     Dim g As System.Drawing.Graphics
     Dim lastX, lasty As Integer
     Sub Draw(x As Integer, y As Integer)
-        g = DrawBox.CreateGraphics
+        g = DrawBox.CreateGraphics ' DrawPictureBox - TJR
         If lastX = Nothing Then
             g.DrawLine(drawPen, x, y, x, y)
 
         Else
             g.DrawLine(drawPen, x, y, lastX, lasty)
-
 
         End If
         lastX = x
@@ -30,7 +29,6 @@ Public Class EtchOSketchLCForm
 
         Else
             g.DrawLine(erasePen, x, y, lastX, lasty)
-
 
         End If
         lastX = x
@@ -59,20 +57,19 @@ Public Class EtchOSketchLCForm
         ColorChooser()
     End Sub
 
-    Private Sub ColorToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Private Sub ColorToolStripMenuItem_Click(sender As Object, e As EventArgs) 'No event ?? - TJR
         ColorChooser()
     End Sub
 
     Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
         Me.Close()
-
     End Sub
 
     Public Sub ClearButton_Click(sender As Object, e As EventArgs) Handles ClearButton.Click
         Clear()
     End Sub
 
-    Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs)
+    Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) 'No event ?? - TJR
         drawPen.Width = 1
     End Sub
 
@@ -137,15 +134,7 @@ Public Class EtchOSketchLCForm
             bruhForm.Show()
         End If
     End Sub
-
-    'Public Sub EtchOSketchLCForm_keypress(sender As Object, e As KeyEventArgs) Handles DrawBox.KeyUp
-    '    If e.KeyCode = Keys.Enter Then
-    '        DrawWaveforms()
-    '    ElseIf e.KeyCode = Keys.Escape Then
-    '        Clear()
-    '    End If
-    'End Sub
-
+    'remove commented code - TJR
     Private Sub EtchOSketchLCForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ActiveControl = DrawBox
     End Sub
@@ -170,8 +159,6 @@ Public Class EtchOSketchLCForm
 
         'Draw SinWave
         For Cycles As Double = 0 To 1000
-
-
             y = Math.Sin(Cycles / 400 * 2 * Math.PI) * 100 + 150
             x = Cycles
             g.DrawLine(SinPen, CType(x, Single), CType(y, Single), CType(x, Single) + 1, CType(y, Single))
@@ -179,8 +166,6 @@ Public Class EtchOSketchLCForm
 
         'Draw CoSinWave
         For Cycles As Double = 0 To 1000
-
-
             y = Math.Cos(Cycles / 400 * 2 * Math.PI) * 100 + 150
             x = Cycles
             g.DrawLine(CoSinPen, CType(x, Single), CType(y, Single), CType(x, Single) + 1, CType(y, Single))
@@ -188,8 +173,6 @@ Public Class EtchOSketchLCForm
 
         'Draw Tangent Wave
         For Cycles As Double = 0 To 1000
-
-
             y = Math.Tan(Cycles / 550 * 2 * Math.PI) * 20 + 150
             x = Cycles
 
@@ -206,8 +189,6 @@ Public Class EtchOSketchLCForm
             LastX = CInt(x)
 
         Next
-
-
 
     End Sub
     Sub Clear()
